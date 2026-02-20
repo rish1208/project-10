@@ -1,0 +1,165 @@
+<app-navbar></app-navbar>
+
+<style>
+  #nnn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .panel-heading {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-inputs {
+    margin-top: 20px;
+  }
+
+  .search-inputs .form-control,
+  .search-inputs .btn {
+    margin-bottom: 10px;
+  }
+
+  .content-wrapper {
+    background: url('assets/files/teahu.png') no-repeat center center;
+    background-attachment: fixed;
+    background-size: cover;
+    width: auto;
+    height: 105vh;
+    padding: 20px;
+  }
+
+  .table-responsive {
+    margin-top: 20px;
+  }
+
+  .search-inputs .col-sm-2,
+  .search-inputs .col-sm-1 {
+    padding: 0 5px;
+  }
+
+  .alertRedColor {
+    color: red;
+  }
+</style>
+<div class="content-wrapper ">
+  <div class="container-fluid">
+    <div class="panel panel-primary" style="padding-top: 7%;">
+      <div class="panel-heading">
+        <h1 class="text-primary font-weight-bold">{{ 'Location List' | translate }}</h1>
+      </div>
+
+      <div class="row search-inputs p-1 justify-content-center g-3">
+        <div class="col-sm-2">
+          <input type="text" name="country" [(ngModel)]="form.searchParams.country" class="form-control"
+            class="form-control" #name="ngModel" maxlength="20" pattern="^[A-Za-z ]+$"
+            (keydown)="filterInputS($event, 'errorMessageName', 20, 'char')"
+            placeholder="{{ 'Enter country' | translate }}">
+          <span *ngIf="errorMessageclientName" class="alertRedColor">{{ errorMessagecountry }}</span>
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" name="location_status" [(ngModel)]="form.searchParams.location_status" class="form-control"
+            placeholder="{{ 'Enter location_status' | translate }}">
+          <span *ngIf="errorMessagelocation_status" class="alertRedColor">{{ errorMessagelocation_status }}</span>
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" name="state" [(ngModel)]="form.searchParams.state" class="form-control"
+            placeholder="{{ 'Enter  state' | translate }}">
+          <span *ngIf="errorMessagestate" class="alertRedColor">{{ errorMessagestate}}</span>
+        </div>
+
+        <div class="col-sm-2">
+          <select class="form-control" name="city" [(ngModel)]="form.searchParams.city" aria-label="ngSelected"
+            required>
+            <option [ngValue]="undefined">{{ 'Select city' | translate }}</option>
+            <option value="Indore">{{ 'Indore' | translate }}</option>
+            <option value="Bhopal">{{ 'Bhopal' | translate }}</option>
+            <option value="Dewas">{{ 'Dewas' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-1">
+          <button (click)="submit()" class="btn btn-primary w-100">{{ 'Search' | translate }}</button>
+        </div>
+
+        <div>
+          <button (click)="forward('/location')" type="button" class="btn btn-success w-100">
+            {{ 'Add Customer' | translate }}
+          </button>
+        </div>
+
+        <div class="col-sm-1">
+          <button (click)="deleteMany()" class="btn btn-danger w-100">{{ 'Delete' | translate }}</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="form.error" class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ form.message }}
+      </div>
+
+      <div *ngIf="!form.error && form.message != null" class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ form.message }}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover table-dark  ">
+          <thead class="thead-dark text-uppercase ">
+            <tr align="center">
+              <th><input type="checkbox" [(ngModel)]="isMasterSel" name="list_name"
+                  (change)="checkUncheckAll($event)" /></th>
+              <th>{{ 'S.No' | translate }}</th>
+              <th>{{ 'country' | translate }}</th>
+              <th>{{ 'location_status ' | translate }}</th>
+              <th>{{ 'state' | translate }}</th>
+              <th>{{ 'city' | translate }}</th>
+              <th>{{ 'Edit' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of form.list; let i = index" align="center">
+              <td><input type="checkbox" #checkboxes (change)="checklistUpdate()" name="list_name" [id]="m.id" /></td>
+              <td>{{ (form.pageNo * 5) + i + 1 }}</td>
+              <td>{{ m.country }}</td>
+              <td>{{ m.location_status }}</td>
+              <td>{{ m.state }}</td>
+              <td>{{m.city}}</td>
+
+              <td>
+                <button class="fa fa-edit text-primary" id="nnn" (click)="forward('/location/' + m.id)">
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between mt-3">
+          <button (click)="previous()" [disabled]="form.pageNo == 0" class="btn btn-info">{{ 'Previous' | translate
+            }}</button>
+
+          <div>
+            <a class="btn btn-warning mr-1" [routerLink]="['/locationlist']" (click)="exit()">
+              {{ 'Reset' | translate }}
+            </a>
+          </div>
+
+          <div *ngIf="form.list.length == 0">
+            <a class="btn btn-warning mr-1" [routerLink]="['/locationlist']" (click)="exit()">
+              {{ 'Back' | translate }}
+            </a>
+          </div>
+          <button (click)="next()" [disabled]="nextList == 0" class="btn btn-info">{{ 'Next' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

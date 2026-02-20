@@ -22,6 +22,7 @@ export class EndpointServiceService {
   public JASPERREPORT = this.SERVER_URL + "/Jasper";
 
   public CUSTOMER = this.SERVER_URL + "/Customer";
+  public LOCATION = this.SERVER_URL + "/Location";
 
 
 

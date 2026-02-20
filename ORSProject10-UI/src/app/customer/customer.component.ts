@@ -16,7 +16,7 @@ export class CustomerComponent extends BaseCtl {
     super(locator.endpoints.CUSTOMER, locator, route);
   }
 
-   onUpload(userform: FormData) {
+  onUpload(userform: FormData) {
     this.submit();
     console.log(this.form.data.id + '---- after submit');
 
@@ -41,34 +41,7 @@ export class CustomerComponent extends BaseCtl {
     form.importance = data.importance;
   }
 
-  validateName(event: KeyboardEvent): void {
-    const inputValue = (event.target as HTMLInputElement).value;
-    const inputChar = event.key;
-    const alphabetPattern = /^[a-zA-Z]*$/;  // Pattern to match only alphabetic characters
 
-    if (!alphabetPattern.test(inputChar) && !['Backspace', 'Delete', 'Tab'].includes(inputChar)) {
-      event.preventDefault();
-      this.errorMessageClientName = 'Only alphabets are allowed.';
-      return;
-    }
 
-    if (inputValue.length < 3) {
-      this.errorMessageClientName = 'fullName must be at least 3 characters long.';
-    } else if (inputValue.length > 15) {
-      this.errorMessageClientName= 'fullName must not exceed 15 characters.';
-    } else {
-      this.errorMessageClientName = '';  // Clear error message if valid
-    }
-  }
-
-  validateAlphabetInput(event) {
-    const charCode = event.which || event.keyCode;
-    const charStr = String.fromCharCode(charCode);
-
-    // Regular expression to test if the character is a letter
-    if (!/^[a-zA-Z]+$/.test(charStr)) {
-      event.preventDefault();
-    }
-  }
 
 }

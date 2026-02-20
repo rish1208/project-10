@@ -37,6 +37,8 @@ import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product/product-list.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerlistComponent } from './customer/customer-list.component';
+import { LocationComponent } from './location/location.component';
+import { LocationlistComponent } from './location/locationlist.component';
 
 
 const routes: Routes = [
@@ -49,7 +51,19 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent
     },
-
+    //******************location*******
+    {
+        path:'location',
+        component: LocationComponent
+    },
+{
+        path: 'locationlist',
+        component: LocationlistComponent
+    },
+    {
+        path: 'location/:id',
+        component: LocationComponent
+    },
     // ***********CUSTOMER*************
 
     {
