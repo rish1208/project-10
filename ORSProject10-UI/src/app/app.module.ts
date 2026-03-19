@@ -57,6 +57,14 @@ import { CustomerComponent } from './customer/customer.component';
 import { CustomerlistComponent } from './customer/customer-list.component';
 import { LocationComponent } from './location/location.component';
 import { LocationlistComponent } from './location/locationlist.component';
+import { CarComponent } from './car/car.component';
+import { CarlistComponent } from './car/carlist.component';
+import { PlacementComponent } from './placement/placement.component';
+import { PlacementlistComponent} from './placement/placementlist.component';
+import { HotelComponent } from './hotel/hotel.component';
+import { HotellistComponent } from './hotel/hotellist.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
+import { VehiclelistComponent } from './vehicle/vehiclelist.component';
 
 
 
@@ -115,6 +123,14 @@ export function myHttpLoader(http: HttpClient) {
     CustomerlistComponent,
     LocationComponent,
     LocationlistComponent,
+    CarComponent,
+    CarlistComponent,
+    PlacementComponent,
+    PlacementlistComponent,
+    HotelComponent,
+    HotellistComponent,
+    VehicleComponent,
+    VehiclelistComponent,
     
  
 

@@ -1,0 +1,164 @@
+<app-navbar></app-navbar>
+
+<style>
+  #nnn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .panel-heading {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-inputs {
+    margin-top: 20px;
+  }
+
+  .search-inputs .form-control,
+  .search-inputs .btn {
+    margin-bottom: 10px;
+  }
+
+  .content-wrapper {
+    background: url('assets/files/teahu.png') no-repeat center center;
+    background-attachment: fixed;
+    background-size: cover;
+    width: auto;
+    height: 105vh;
+    padding: 20px;
+  }
+
+  .table-responsive {
+    margin-top: 20px;
+  }
+
+  .search-inputs .col-sm-2,
+  .search-inputs .col-sm-1 {
+    padding: 0 5px;
+  }
+
+  .alertRedColor {
+    color: red;
+  }
+</style>
+<div class="content-wrapper ">
+  <div class="container-fluid">
+    <div class="panel panel-primary" style="padding-top: 7%;">
+      <div class="panel-heading">
+        <h1 class="text-primary font-weight-bold">{{ 'Hotel List' | translate }}</h1>
+      </div>
+ <div class="row search-inputs p-1 justify-content-center g-3">
+        <div class="col-sm-2">
+          <input type="text" name="participant_name" [(ngModel)]="form.searchParams.participant_name" class="form-control"
+            class="form-control" #name="ngModel" maxlength="20" pattern="^[A-Za-z ]+$"
+            (keydown)="filterInputS($event, 'errorMessageName', 20, 'char')"
+            placeholder="{{ 'Enter participant_name' | translate }}">
+          <span *ngIf="errorMessageparticipant_name" class="alertRedColor">{{ errorMessageparticipant_name }}</span>
+        </div>
+<!--------------------------------------------------------------------------------------------------------->
+        <div class="col-sm-2">
+          <input type="date" name="allotment_date" [(ngModel)]="form.searchParams.allotment_date" class="form-control"
+            placeholder="{{ 'Enter allotment_date' | translate }}">
+          <span *ngIf="errorMessageallotment_date" class="alertRedColor">{{ errorMessageallotment_date }}</span>
+        </div>
+<!--------------------------------------------------------------------------------------------------------->
+        <div class="col-sm-2">
+          <input type="text" name="service_type" [(ngModel)]="form.searchParams.service_type" class="form-control"
+            placeholder="{{ 'Enter  service_type' | translate }}">
+          <span *ngIf="errorMessageservice_type" class="alertRedColor">{{ errorMessageservice_type}}</span>
+        </div>
+<!--------------------------------------------------------------------------------------------------------->
+        <div class="col-sm-2">
+          <select class="form-control" name="room_number" [(ngModel)]="form.searchParams.room_number" aria-label="ngSelected"
+            required>
+            <option [ngValue]="undefined">{{ 'Select room_number' | translate }}</option>
+            <option value="Delux">{{ 'Delux' | translate }}</option>
+            <option value="Normal">{{ 'Normal' | translate }}</option>
+            <option value="SuperDelux">{{ 'SuperDelux' | translate }}</option>
+          </select>
+        </div>
+<!--------------------------------------------------------------------------------------------------------->
+        <div class="col-sm-1">
+          <button (click)="submit()" class="btn btn-primary w-100">{{ 'Search' | translate }}</button>
+        </div>
+
+        <div>
+          <button (click)="forward('/car')" type="button" class="btn btn-success w-100">
+            {{ 'Add Hotel' | translate }}
+          </button>
+        </div>
+
+        <div class="col-sm-1">
+          <button (click)="deleteMany()" class="btn btn-danger w-100">{{ 'Delete' | translate }}</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="form.error" class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ form.message }}
+      </div>
+
+      <div *ngIf="!form.error && form.message != null" class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ form.message }}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover table-dark  ">
+          <thead class="thead-dark text-uppercase ">
+            <tr align="center">
+              <th><input type="checkbox" [(ngModel)]="isMasterSel" name="room_number"
+                  (change)="checkUncheckAll($event)" /></th>
+              <th>{{ 'S.No' | translate }}</th>
+              <th>{{ 'participant_name' | translate }}</th>
+              <th>{{ 'allotment_date ' | translate }}</th>
+              <th>{{ 'service_type' | translate }}</th>
+              <th>{{ 'room_number' | translate }}</th>
+              <th>{{ 'Edit' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of form.list; let i = index" align="center">
+              <td><input type="checkbox" #checkboxes (change)="checklistUpdate()" name="list_name" [id]="m.id" /></td>
+              <td>{{ (form.pageNo * 5) + i + 1 }}</td>
+              <td>{{ m.participant_name }}</td>
+              <td>{{ m.allotment_date }}</td>
+              <td>{{ m.service_type }}</td>
+              <td>{{m.room_number}}</td>
+
+              <td>
+                <button class="fa fa-edit text-primary" id="nnn" (click)="forward('/vehicle/' + m.id)">
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between mt-3">
+          <button (click)="previous()" [disabled]="form.pageNo == 0" class="btn btn-info">{{ 'Previous' | translate
+            }}</button>
+
+          <div>
+            <a class="btn btn-warning mr-1" [routerLink]="['/vehiclelist']" (click)="exit()">
+              {{ 'Reset' | translate }}
+            </a>
+          </div>
+
+          <div *ngIf="form.list.length == 0">
+            <a class="btn btn-warning mr-1" [routerLink]="['/vehiclelist']" (click)="exit()">
+              {{ 'Back' | translate }}
+            </a>
+          </div>
+          <button (click)="next()" [disabled]="nextList == 0" class="btn btn-info">{{ 'Next' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

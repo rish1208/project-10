@@ -1,0 +1,165 @@
+<app-navbar></app-navbar>
+
+<style>
+  .grad {
+    background-image: linear-gradient(to bottom right, rgb(32, 168, 168), rgb(219, 231, 237));
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding-bottom: 25px;
+  }
+
+  .background {
+    padding-top: 3%;
+    padding-bottom: 13%;
+    background: url('assets/files/wall.jpg') no-repeat center center;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: auto;
+  }
+
+  .required-field {
+    color: red;
+  }
+
+  .alertRedColor {
+    color: red;
+  }
+</style>
+
+<div class="container-fluid background" style="padding-top: 8%">
+  <div class="row justify-content-center">
+    <div class="col-sm-8 col-md-6 col-lg-4">
+      <div class="card" >
+        <div class="card-body shadow-lg grad">
+          <form name="assetForm">
+            <h2 *ngIf="!form.data.id" class="text-primary font-weight-bold" style="text-align: center;">
+              {{ 'Add Hotel' | translate }}
+            </h2>
+            <h2 *ngIf="form.data.id" class="text-primary font-weight-bold" style="text-align: center;">
+              {{ 'Update Hotel' | translate }}
+            </h2>
+
+            <!-- Form error messages -->
+            <div *ngIf="form.error && form.message" class="alert alert-danger alert-dismissible fade show">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ form.message }}
+            </div>
+            <div *ngIf="!form.error && form.message" class="alert alert-success alert-dismissible fade show">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ form.message }}
+            </div>
+
+            <!-- Name Field with Validation -->
+
+            <div class="form-group pt-2">
+              <label>
+                <b>{{ 'participant_name' | translate }}</b>
+                <span class="required-field">*</span>
+              </label>
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-user grey-text"></i></div>
+                </div>
+
+                <input type="text" name="participant_name" [(ngModel)]="form.data.participant_name" class="form-control"
+                  #country="ngModel" maxlength="20" pattern="^[A-Za-z ]+$"
+                  (keydown)="filterInputS($event, 'errorMessageparticipant_name', 20, 'char')"
+                  placeholder="{{ 'Enter participant_name' | translate }}">
+              </div>
+
+              <!-- Custom error messages from component -->
+              <span *ngIf="form.inputerror.participant_name" class="alertRedColor">{{ form.inputerror.participant_name }}</span>
+            </div>
+
+<!----------------------------------------------------------------------------------------------->
+            <div class="form-group pt-2">
+              <label>
+                <b>{{ 'service_type' | translate }}</b>
+                <span class="required-field">*</span>
+              </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-map-marker grey-text"></i></div>
+                </div>
+                <input type="text" name="block_name" [(ngModel)]="form.data.block_name" class="form-control"
+                   maxlength="35"
+                  placeholder="{{ 'Enter block_name' | translate }}">
+              </div>
+              <span *ngIf="form.inputerror.block_name" class="alertRedColor">{{ form.inputerror.block_name }}</span>
+            </div>
+            <!--------------------------------------------------------------------------------------------------------->
+
+             <div>
+         
+             <span class="pt-2"><b>{{'allotment_date' | translate }}</b>
+              <span class="required-field"></span></span>
+
+            <div class="col-sm-12">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-table grey-text"></i> </div>
+                </div>
+                <input type="date" name="allotment_date" [value]="form.data.allotment_date | date:'yyyy-MM-dd'"
+                  (input)="form.data.service_date=parseDate($event.target.value)" class="form-control form-control-sm"
+                  required />
+              </div>
+            </div>
+<span *ngIf="form.inputerror.allotment_date != null" class="alertRedColor" style=" color: red;"> {{'allotment_date'|
+              translate}} </span>
+            <!-- <span class="alertRedColor"> {{form.inputerror.dob}} </span> -->
+          </div>
+<!----------------------------------------------------------------------------------------------------------------->
+            <div class="form-group pt-2">
+              <label><b>{{ 'room_number' | translate }}</b><span class="required-field">*</span></label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-paint-brush grey-text"></i></div>
+                </div>
+                <select class="form-control" name="room_number" [(ngModel)]="form.data.room_number"
+                  aria-label="ngSelected" required>
+                  <option [ngValue]="undefined">{{ 'Select room_number' | translate }}</option>
+                  <option value="Delux">{{ 'Delux' | translate }}</option>
+            <option value="Normal">{{ 'Normal' | translate }}</option>
+            <option value="SuperDelux">{{ 'SuperDelux' | translate }}</option>
+                </select>
+              </div>
+              <span *ngIf="form.inputerror?.room_number" class="alertRedColor">{{ form.inputerror.room_number }}</span>
+            </div>
+            <!---------------------------------------------------------------------------->
+            <div class="row pt-2 pl-2 pb-3">
+
+              <div class="col-md-3"></div>
+
+              <div class="pt-2">
+                <button *ngIf="!form.data.id > 0" (click)="submit()" class="btn btn-success mr-2">
+                  {{ 'Save' | translate }}
+                </button>
+              </div>
+
+              <div class="col-md-1"></div>
+
+              <div class="pt-2">
+                <button *ngIf="form.data.id > 0" (click)="submit()" class="btn btn-success mr-2">
+                  {{ 'Update' | translate }}
+                </button>
+              </div>
+
+              <div class="pt-2">
+                <a class="btn btn-warning mr-1" type="button" [routerLink]="['/hotellist']"
+                  style="text-decoration: none; color: white;">
+                  {{ 'List' | translate }}
+                </a>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

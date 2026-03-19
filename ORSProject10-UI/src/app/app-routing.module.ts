@@ -39,6 +39,14 @@ import { CustomerComponent } from './customer/customer.component';
 import { CustomerlistComponent } from './customer/customer-list.component';
 import { LocationComponent } from './location/location.component';
 import { LocationlistComponent } from './location/locationlist.component';
+import { CarComponent } from './car/car.component';
+import { CarlistComponent } from './car/carlist.component';
+import { PlacementComponent } from './placement/placement.component';
+import { PlacementlistComponent } from './placement/placementlist.component';
+import { HotelComponent } from './hotel/hotel.component';
+import { HotellistComponent } from './hotel/hotellist.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
+import { VehiclelistComponent } from './vehicle/vehiclelist.component';
 
 
 const routes: Routes = [
@@ -47,10 +55,73 @@ const routes: Routes = [
         redirectTo: 'dashboard',
         pathMatch: 'full'
     },
+
     {
         path: 'dashboard',
         component: DashboardComponent
     },
+//******************vehicle*******
+     {
+        path:'vehicle',
+        component: VehicleComponent
+     },
+
+     {
+        path:'vehiclelist',
+        component: VehiclelistComponent
+     },
+
+     {
+        path:'vehicle/:id',
+        component: VehicleComponent
+     },
+
+
+
+ //******************Hotel*******
+     {
+        path:'hotel',
+        component: HotelComponent
+     },
+
+     {
+        path:'hotellist',
+        component: HotellistComponent
+     },
+
+     {
+        path:'hotel/:id',
+        component: HotelComponent
+     },
+
+     //*****************Placement*******
+    {
+        path: 'placement',
+        component: PlacementComponent
+     },
+     {       path:'placementlist',
+             component: PlacementlistComponent
+
+     },
+      {
+        path: 'placement/:id',
+        component: PlacementComponent
+     },
+     //******************Car*******
+     {
+        path:'car',
+        component: CarComponent
+     },
+
+     {
+        path:'carlist',
+        component: CarlistComponent
+     },
+
+     {
+        path:'car/:id',
+        component: CarComponent
+     },
     //******************location*******
     {
         path:'location',

@@ -81,6 +81,53 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="nav navbar-nav pl-2">
 
+ <!-- =================================== Hotel =========================================== -->
+
+      <li class="nav-item dropdown" style="padding-left: 5px">
+        <a class="nav-link dropdown-toggle" [routerLink]="['/#']" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <font style="color: white">{{ "Hotel" | translate }}</font>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="['/hotel']"><i class="fa fa-university"></i> &nbsp;
+            {{ "Add Hotel" | translate }}</a>
+          <a class="dropdown-item" [routerLink]="['/hotellist']"><i class="fa fa-building"></i> &nbsp;
+            {{ "Hotel List" | translate }}
+          </a>
+        </div>
+
+
+
+
+      <!-- =================================== vehicle =========================================== -->
+
+      <li class="nav-item dropdown" style="padding-left: 5px">
+        <a class="nav-link dropdown-toggle" [routerLink]="['/#']" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <font style="color: white">{{ "Vehicle" | translate }}</font>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="['/vehicle']"><i class="fa fa-university"></i> &nbsp;
+            {{ "Add Vehicle" | translate }}</a>
+          <a class="dropdown-item" [routerLink]="['/vehiclelist']"><i class="fa fa-building"></i> &nbsp;
+            {{ "Vehicle List" | translate }}
+          </a>
+        </div>
+
+<!-- =================================== Location =========================================== -->
+
+      <li class="nav-item dropdown" style="padding-left: 5px">
+        <a class="nav-link dropdown-toggle" [routerLink]="['/#']" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <font style="color: white">{{ "Car" | translate }}</font>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="['/car']"><i class="fa fa-university"></i> &nbsp;
+            {{ "Add Car" | translate }}</a>
+          <a class="dropdown-item" [routerLink]="['/carlist']"><i class="fa fa-building"></i> &nbsp;
+            {{ "Car List" | translate }}
+          </a>
+        </div>
  <!-- =================================== Location =========================================== -->
 
       <li class="nav-item dropdown" style="padding-left: 5px">
@@ -95,11 +142,6 @@
             {{ "Location List" | translate }}
           </a>
         </div>
-
-
-
-
-
       <!-- =================================== CUSTOMER =========================================== -->
 
       <li class="nav-item dropdown" style="padding-left: 5px">

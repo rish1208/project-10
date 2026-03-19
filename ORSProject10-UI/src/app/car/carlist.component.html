@@ -1,0 +1,164 @@
+<app-navbar></app-navbar>
+
+<style>
+  #nnn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .panel-heading {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-inputs {
+    margin-top: 20px;
+  }
+
+  .search-inputs .form-control,
+  .search-inputs .btn {
+    margin-bottom: 10px;
+  }
+
+  .content-wrapper {
+    background: url('assets/files/teahu.png') no-repeat center center;
+    background-attachment: fixed;
+    background-size: cover;
+    width: auto;
+    height: 105vh;
+    padding: 20px;
+  }
+
+  .table-responsive {
+    margin-top: 20px;
+  }
+
+  .search-inputs .col-sm-2,
+  .search-inputs .col-sm-1 {
+    padding: 0 5px;
+  }
+
+  .alertRedColor {
+    color: red;
+  }
+</style>
+<div class="content-wrapper ">
+  <div class="container-fluid">
+    <div class="panel panel-primary" style="padding-top: 7%;">
+      <div class="panel-heading">
+        <h1 class="text-primary font-weight-bold">{{ 'Car List' | translate }}</h1>
+      </div>
+ <div class="row search-inputs p-1 justify-content-center g-3">
+        <div class="col-sm-2">
+          <input type="text" name="car_code" [(ngModel)]="form.searchParams.car_code" class="form-control"
+            class="form-control" #name="ngModel" maxlength="20" pattern="^[A-Za-z ]+$"
+            (keydown)="filterInputS($event, 'errorMessageName', 20, 'char')"
+            placeholder="{{ 'Enter car_code' | translate }}">
+          <span *ngIf="errorMessagecar_code" class="alertRedColor">{{ errorMessagecar_code }}</span>
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" name="car_model" [(ngModel)]="form.searchParams.car_model" class="form-control"
+            placeholder="{{ 'Enter car_model' | translate }}">
+          <span *ngIf="errorMessagecar_model" class="alertRedColor">{{ errorMessagecar_model }}</span>
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" name="car_status" [(ngModel)]="form.searchParams.car_status" class="form-control"
+            placeholder="{{ 'Enter  car_status' | translate }}">
+          <span *ngIf="errorMessagecar_status" class="alertRedColor">{{ errorMessagecar_status}}</span>
+        </div>
+
+        <div class="col-sm-2">
+          <select class="form-control" name="car_name" [(ngModel)]="form.searchParams.car_name" aria-label="ngSelected"
+            required>
+            <option [ngValue]="undefined">{{ 'Select city' | translate }}</option>
+            <option value="Thar">{{ 'Thar' | translate }}</option>
+            <option value="BMW">{{ 'BMW' | translate }}</option>
+            <option value="Audi">{{ 'Audi' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-1">
+          <button (click)="submit()" class="btn btn-primary w-100">{{ 'Search' | translate }}</button>
+        </div>
+
+        <div>
+          <button (click)="forward('/car')" type="button" class="btn btn-success w-100">
+            {{ 'Add Car' | translate }}
+          </button>
+        </div>
+
+        <div class="col-sm-1">
+          <button (click)="deleteMany()" class="btn btn-danger w-100">{{ 'Delete' | translate }}</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="form.error" class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ form.message }}
+      </div>
+
+      <div *ngIf="!form.error && form.message != null" class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ form.message }}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover table-dark  ">
+          <thead class="thead-dark text-uppercase ">
+            <tr align="center">
+              <th><input type="checkbox" [(ngModel)]="isMasterSel" name="car_name"
+                  (change)="checkUncheckAll($event)" /></th>
+              <th>{{ 'S.No' | translate }}</th>
+              <th>{{ 'car_code' | translate }}</th>
+              <th>{{ 'car_name ' | translate }}</th>
+              <th>{{ 'car_model' | translate }}</th>
+              <th>{{ 'car_status' | translate }}</th>
+              <th>{{ 'Edit' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of form.list; let i = index" align="center">
+              <td><input type="checkbox" #checkboxes (change)="checklistUpdate()" name="list_name" [id]="m.id" /></td>
+              <td>{{ (form.pageNo * 5) + i + 1 }}</td>
+              <td>{{ m.car_code }}</td>
+              <td>{{ m.car_name }}</td>
+              <td>{{ m.car_model }}</td>
+              <td>{{m.car_status}}</td>
+
+              <td>
+                <button class="fa fa-edit text-primary" id="nnn" (click)="forward('/location/' + m.id)">
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between mt-3">
+          <button (click)="previous()" [disabled]="form.pageNo == 0" class="btn btn-info">{{ 'Previous' | translate
+            }}</button>
+
+          <div>
+            <a class="btn btn-warning mr-1" [routerLink]="['/carlist']" (click)="exit()">
+              {{ 'Reset' | translate }}
+            </a>
+          </div>
+
+          <div *ngIf="form.list.length == 0">
+            <a class="btn btn-warning mr-1" [routerLink]="['/carlist']" (click)="exit()">
+              {{ 'Back' | translate }}
+            </a>
+          </div>
+          <button (click)="next()" [disabled]="nextList == 0" class="btn btn-info">{{ 'Next' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
